@@ -1,9 +1,10 @@
 import requests
 from app.core.config import settings
 from fastapi import HTTPException
-from app.core.prompts import PROMPT_TEMPLATE
+from app.core.prompts import get_prompt_template
 
-def get_image_description(base64_image):
+def get_image_description(category, base64_image):
+    prompt_template = get_prompt_template(category)
     headers = {
         "Content-Type": "application/json",
         "Authorization": f"Bearer {settings.OPENAI_API_KEY}"
@@ -16,7 +17,7 @@ def get_image_description(base64_image):
                 "content": [
                     {
                         "type": "text",
-                        "text": PROMPT_TEMPLATE
+                        "text": prompt_template
                     },
                     {
                         "type": "image_url",
