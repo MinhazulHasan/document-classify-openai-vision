@@ -1,6 +1,9 @@
-from fastapi import APIRouter, UploadFile, File, HTTPException
+from fastapi import APIRouter, UploadFile, File, HTTPException, BackgroundTasks
 from app.services.image_service import get_image_description
+from app.services.report_service import generate_report
 from app.utils.helpers import encode_image
+from app.utils.logger import report_logger
+
 
 router = APIRouter()
 
@@ -13,3 +16,10 @@ async def image_description(category: str, file: UploadFile = File(...)):
     base64_image = encode_image(file_content)
     response = get_image_description(category, base64_image)
     return {"response": response}
+
+
+@router.post("/generate_report/")
+async def generate_report_endpoint(background_tasks: BackgroundTasks):
+    report_logger.info("Report generation requested")
+    background_tasks.add_task(generate_report)
+    return {"message": "Report generation started in the background"}
