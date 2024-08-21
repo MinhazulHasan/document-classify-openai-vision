@@ -42,3 +42,6 @@ wheels/
 
 # Jupyter Notebook
 .ipynb_checkpoints
+
+test-data-v2/
+report-v2/
