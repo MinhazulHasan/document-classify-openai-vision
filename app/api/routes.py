@@ -1,5 +1,6 @@
 from fastapi import APIRouter, UploadFile, File, HTTPException, BackgroundTasks
 from app.services.image_service import get_image_description
+from app.services.room_condition_service import get_room_condition
 from app.services.report_service import generate_report
 from app.services.report_service_mixed_data import generate_report_for_mixed_data, get_report
 from app.utils.helpers import encode_image
@@ -42,3 +43,15 @@ async def get_report_for_mixed_data() -> Dict[str, Any]:
     
     except FileNotFoundError:
         raise HTTPException(status_code=404, detail="Report not found")
+
+
+@router.post("/room_condition/")
+async def room_condition(file: UploadFile = File(...)):
+    if file.content_type not in ["image/jpeg", "image/png"]:
+        raise HTTPException(status_code=400, detail="Invalid file type. Only JPEG and PNG are supported.")
+    
+    file_content = await file.read()
+    base64_image = encode_image(file_content)
+    response = get_room_condition(base64_image)
+    print(response)
+    return {"response": response}

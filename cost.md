@@ -50,7 +50,3 @@ The recommended base price per API call is $0.005. This pricing strategy covers 
 References:
 1. OpenAI API Pricing: https://openai.com/pricing
 2. OpenAI GPT-4 Vision: https://platform.openai.com/docs/guides/vision
-
-Note: This cost estimation focuses solely on the OpenAI API usage as requested. Additional costs such as server hosting, maintenance, development time, and other operational expenses are not included in this analysis.
-
-Would you like me to elaborate on any part of this report or provide any additional information?
